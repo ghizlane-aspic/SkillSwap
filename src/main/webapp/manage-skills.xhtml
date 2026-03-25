@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">SkillSwap - Mes Compétences</ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <h1>Gérer mes Compétences</h1>
+            <h:messages globalOnly="true" styleClass="messages"/>
+
+            <!-- Form to add/edit offer -->
+            <div class="skill-form">
+                <h2>#{manageSkillsBean.editingOfferId != null ? 'Modifier' : 'Publier'} une offre</h2>
+
+                <h:form>
+                    <div class="form-group">
+                        <h:outputLabel for="category" value="Catégorie"/>
+                        <h:selectOneMenu id="category" value="#{manageSkillsBean.selectedCategoryId}"
+                                         styleClass="form-control">
+                            <f:selectItem itemValue="" itemLabel="-- Choisir une catégorie --"/>
+                            <f:selectItems value="#{manageSkillsBean.categories}"
+                                           var="cat" itemValue="#{cat.id}" itemLabel="#{cat.nomCategorie}"/>
+                            <f:ajax event="change" listener="#{manageSkillsBean.loadSkillsByCategory}"
+                                    render="skillSelect"/>
+                        </h:selectOneMenu>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="skillSelect" value="Compétence"/>
+                        <h:selectOneMenu id="skillSelect" value="#{manageSkillsBean.selectedSkillId}"
+                                         styleClass="form-control"
+                                         required="true" requiredMessage="Veuillez choisir une compétence">
+                            <f:selectItem itemValue="" itemLabel="-- Choisir une compétence --"/>
+                            <f:selectItems value="#{manageSkillsBean.skills}"
+                                           var="skill" itemValue="#{skill.id}" itemLabel="#{skill.titreCompetence}"/>
+                        </h:selectOneMenu>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="niveau" value="Niveau"/>
+                        <h:selectOneMenu id="niveau" value="#{manageSkillsBean.niveau}"
+                                         styleClass="form-control"
+                                         required="true" requiredMessage="Veuillez choisir un niveau">
+                            <f:selectItem itemValue="" itemLabel="-- Choisir un niveau --"/>
+                            <f:selectItems value="#{manageSkillsBean.levels}"
+                                           var="lvl" itemValue="#{lvl}" itemLabel="#{lvl.label}"/>
+                        </h:selectOneMenu>
+                    </div>
+
+                    <div class="form-group">
+                        <h:outputLabel for="description" value="Description"/>
+                        <h:inputTextarea id="description" value="#{manageSkillsBean.descriptionOffre}"
+                                         styleClass="form-control" rows="4"
+                                         required="true" requiredMessage="La description est requise"/>
+                    </div>
+
+                    <div style="display: flex; gap: 0.5rem;">
+                        <h:commandButton value="#{manageSkillsBean.editingOfferId != null ? 'Mettre à jour' : 'Publier'}"
+                                         action="#{manageSkillsBean.saveOffer}"
+                                         styleClass="btn btn-primary"/>
+                        <h:commandButton value="Annuler"
+                                         action="#{manageSkillsBean.resetForm}"
+                                         rendered="#{manageSkillsBean.editingOfferId != null}"
+                                         styleClass="btn btn-secondary"
+                                         immediate="true"/>
+                    </div>
+                </h:form>
+            </div>
+
+            <!-- Add new skill -->
+            <div class="skill-form">
+                <h2>Ajouter une nouvelle compétence au référentiel</h2>
+                <h:form>
+                    <div style="display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap;">
+                        <div class="form-group">
+                            <h:outputLabel value="Titre"/>
+                            <h:inputText value="#{manageSkillsBean.newSkillTitle}" styleClass="form-control"
+                                         required="true" requiredMessage="Le titre est requis"/>
+                        </div>
+                        <div class="form-group">
+                            <h:outputLabel value="Catégorie"/>
+                            <h:selectOneMenu value="#{manageSkillsBean.newSkillCategoryId}" styleClass="form-control"
+                                             required="true" requiredMessage="La catégorie est requise">
+                                <f:selectItem itemValue="" itemLabel="-- Catégorie --"/>
+                                <f:selectItems value="#{manageSkillsBean.categories}"
+                                               var="cat" itemValue="#{cat.id}" itemLabel="#{cat.nomCategorie}"/>
+                            </h:selectOneMenu>
+                        </div>
+                        <h:commandButton value="Ajouter" action="#{manageSkillsBean.createNewSkill}"
+                                         styleClass="btn btn-success"/>
+                    </div>
+                </h:form>
+            </div>
+
+            <!-- My Offers List -->
+            <div class="dashboard-section">
+                <h2>Mes offres publiées</h2>
+
+                <ui:fragment rendered="#{not empty manageSkillsBean.myOffers}">
+                    <table class="swap-table">
+                        <thead>
+                        <tr>
+                            <th>Compétence</th>
+                            <th>Catégorie</th>
+                            <th>Niveau</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ui:repeat value="#{manageSkillsBean.myOffers}" var="offer">
+                            <tr>
+                                <td>#{offer.skill.titreCompetence}</td>
+                                <td><span class="badge badge-category">#{offer.skill.category.nomCategorie}</span></td>
+                                <td><span class="badge badge-level">#{offer.niveau.label}</span></td>
+                                <td>#{offer.datePublication}</td>
+                                <td>
+                                    <h:form styleClass="actions-cell">
+                                        <h:commandButton value="✏️ Modifier"
+                                                         action="#{manageSkillsBean.editOffer(offer)}"
+                                                         styleClass="btn btn-sm btn-secondary"/>
+                                        <h:commandButton value="🗑️ Supprimer"
+                                                         action="#{manageSkillsBean.deleteOffer(offer.id)}"
+                                                         styleClass="btn btn-sm btn-danger"
+                                                         onclick="return confirm('Êtes-vous sûr ?')"/>
+                                    </h:form>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                        </tbody>
+                    </table>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{empty manageSkillsBean.myOffers}">
+                    <p style="color: #888; text-align: center; padding: 2rem;">
+                        Vous n'avez pas encore publié d'offres.
+                    </p>
+                </ui:fragment>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
