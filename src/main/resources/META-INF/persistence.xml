@@ -7,7 +7,14 @@
     <persistence-unit name="SkillSwapPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <!-- Entities will be listed here as they are added -->
+        <!-- Entities -->
+        <class>ma.skillswap.model.entity.User</class>
+        <class>ma.skillswap.model.entity.Category</class>
+        <class>ma.skillswap.model.entity.Skill</class>
+        <class>ma.skillswap.model.entity.SkillOffer</class>
+        <class>ma.skillswap.model.entity.SwapRequest</class>
+        <class>ma.skillswap.model.entity.Review</class>
+        <class>ma.skillswap.model.entity.Message</class>
 
         <properties>
             <!-- JDBC Connection -->
@@ -23,5 +30,6 @@
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
         </properties>
+
     </persistence-unit>
 </persistence>
