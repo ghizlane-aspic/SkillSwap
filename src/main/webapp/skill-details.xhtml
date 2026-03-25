@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">SkillSwap - Détails</ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <ui:fragment rendered="#{skillOfferBean.offer != null}">
+                <div class="dashboard-section">
+                    <h:messages globalOnly="true" styleClass="messages"/>
+
+                    <h1>#{skillOfferBean.offer.skill.titreCompetence}</h1>
+
+                    <div class="offer-meta" style="margin: 1rem 0;">
+                        <span class="badge badge-category">
+                            #{skillOfferBean.offer.skill.category.nomCategorie}
+                        </span>
+                        <span class="badge badge-level">
+                            #{skillOfferBean.offer.niveau.label}
+                        </span>
+                    </div>
+
+                    <p style="margin: 1.5rem 0; font-size: 1.1rem;">
+                        #{skillOfferBean.offer.descriptionOffre}
+                    </p>
+
+                    <div class="profile-header" style="margin-top: 2rem;">
+                        <div>
+                            <h3>Proposé par : #{skillOfferBean.offer.user.nom}</h3>
+                            <p>📍 #{skillOfferBean.offer.user.ville}</p>
+                            <p>⭐ Note moyenne :
+                                <strong>
+                                    #{skillOfferBean.providerAverageRating != null
+                                            ? skillOfferBean.providerAverageRating : 'Pas encore noté'}
+                                </strong>
+                                /5
+                            </p>
+                            <p>📅 Publié le #{skillOfferBean.offer.datePublication}</p>
+                        </div>
+                    </div>
+
+                    <!-- Swap Request Button -->
+                    <ui:fragment rendered="#{authBean.loggedIn and !skillOfferBean.ownOffer}">
+                        <h:form style="margin-top: 1.5rem;">
+                            <h:commandButton value="🔄 Demander un Swap"
+                                             action="#{skillOfferBean.requestSwap}"
+                                             styleClass="btn btn-primary btn-lg"/>
+                        </h:form>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{!authBean.loggedIn}">
+                        <p style="margin-top: 1.5rem;">
+                            <h:link value="Connectez-vous pour demander un swap" outcome="/login"
+                                    styleClass="btn btn-primary"/>
+                        </p>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{skillOfferBean.ownOffer}">
+                        <p style="margin-top: 1.5rem; color: #888;">
+                            C'est votre propre offre.
+                        </p>
+                    </ui:fragment>
+                </div>
+
+                <!-- Reviews Section -->
+                <div class="dashboard-section">
+                    <h2>Avis sur #{skillOfferBean.offer.user.nom}</h2>
+                    <ui:repeat value="#{skillOfferBean.providerReviews}" var="review">
+                        <div class="review-card">
+                            <div class="review-stars">
+                                <ui:repeat value="#{review.note}" var="star" begin="1" end="#{review.note}">
+                                    ★
+                                </ui:repeat>
+                            </div>
+                            <p class="review-comment">#{review.commentaire}</p>
+                        </div>
+                    </ui:repeat>
+
+                    <ui:fragment rendered="#{empty skillOfferBean.providerReviews}">
+                        <p style="color: #888;">Aucun avis pour le moment.</p>
+                    </ui:fragment>
+                </div>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{skillOfferBean.offer == null}">
+                <div style="text-align: center; padding: 3rem;">
+                    <h2>Offre introuvable</h2>
+                    <h:link value="Retour au catalogue" outcome="/catalog" styleClass="btn btn-primary"/>
+                </div>
+            </ui:fragment>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
