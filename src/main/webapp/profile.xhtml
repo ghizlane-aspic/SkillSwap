@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">SkillSwap - Mon Profil</ui:define>
+
+    <ui:define name="content">
+        <div class="container profile-container">
+            <h1>Mon Profil</h1>
+            <h:messages globalOnly="true" styleClass="messages"/>
+
+            <!-- Profile Stats -->
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <div class="stat-value">#{profileBean.user.soldeHeures}</div>
+                    <div class="stat-label">Crédits Temps</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">#{profileBean.completedSwaps}</div>
+                    <div class="stat-label">Échanges réalisés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">
+                        #{profileBean.averageRating != null ?
+                          String.format('%.1f', profileBean.averageRating) : 'N/A'}
+                    </div>
+                    <div class="stat-label">Note moyenne ⭐</div>
+                </div>
+            </div>
+
+            <!-- Profile Info -->
+            <div class="dashboard-section">
+                <h2>Informations personnelles</h2>
+
+                <h:form>
+                    <ui:fragment rendered="#{!profileBean.editMode}">
+                        <p><strong>Nom :</strong> #{profileBean.user.nom}</p>
+                        <p><strong>Email :</strong> #{profileBean.user.email}</p>
+                        <p><strong>Ville :</strong> #{profileBean.user.ville}</p>
+                        <p><strong>Biographie :</strong>
+                            #{profileBean.user.biographie != null ? profileBean.user.biographie : 'Non renseignée'}
+                        </p>
+                        <p><strong>Membre depuis :</strong> #{profileBean.user.dateInscription}</p>
+
+                        <h:commandButton value="✏️ Modifier" action="#{profileBean.toggleEditMode}"
+                                         styleClass="btn btn-secondary" style="margin-top: 1rem;"/>
+                    </ui:fragment>
+
+                    <ui:fragment rendered="#{profileBean.editMode}">
+                        <div class="form-group">
+                            <h:outputLabel for="nom" value="Nom"/>
+                            <h:inputText id="nom" value="#{profileBean.user.nom}" styleClass="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="ville" value="Ville"/>
+                            <h:inputText id="ville" value="#{profileBean.user.ville}" styleClass="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="bio" value="Biographie"/>
+                            <h:inputTextarea id="bio" value="#{profileBean.user.biographie}"
+                                             styleClass="form-control" rows="4"/>
+                        </div>
+
+                        <div style="display: flex; gap: 0.5rem;">
+                            <h:commandButton value="💾 Sauvegarder" action="#{profileBean.updateProfile}"
+                                             styleClass="btn btn-primary"/>
+                            <h:commandButton value="Annuler" action="#{profileBean.toggleEditMode}"
+                                             styleClass="btn btn-secondary" immediate="true"/>
+                        </div>
+                    </ui:fragment>
+                </h:form>
+            </div>
+
+            <!-- My Skills -->
+            <div class="dashboard-section">
+                <h2>Mes compétences publiées</h2>
+
+                <ui:repeat value="#{profileBean.userOffers}" var="offer">
+                    <div class="offer-card" style="margin-bottom: 1rem;">
+                        <h3>#{offer.skill.titreCompetence}</h3>
+                        <div class="offer-meta">
+                            <span class="badge badge-category">#{offer.skill.category.nomCategorie}</span>
+                            <span class="badge badge-level">#{offer.niveau.label}</span>
+                        </div>
+                        <p class="offer-description">#{offer.descriptionOffre}</p>
+                    </div>
+                </ui:repeat>
+
+                <ui:fragment rendered="#{empty profileBean.userOffers}">
+                    <p style="color: #888;">Aucune compétence publiée.</p>
+                </ui:fragment>
+            </div>
+
+            <!-- Review Form -->
+            <ui:fragment rendered="#{profileBean.reviewSwapId != null}">
+                <div class="dashboard-section">
+                    <h2>⭐ Laisser un avis</h2>
+                    <h:form>
+                        <h:inputHidden value="#{profileBean.reviewSwapId}"/>
+
+                        <div class="form-group">
+                            <h:outputLabel for="note" value="Note (1-5)"/>
+                            <h:selectOneMenu id="note" value="#{profileBean.reviewNote}"
+                                             styleClass="form-control"
+                                             required="true" requiredMessage="La note est requise">
+                                <f:selectItem itemValue="" itemLabel="-- Noter --"/>
+                                <f:selectItem itemValue="1" itemLabel="⭐ 1 - Insuffisant"/>
+                                <f:selectItem itemValue="2" itemLabel="⭐⭐ 2 - Moyen"/>
+                                <f:selectItem itemValue="3" itemLabel="⭐⭐⭐ 3 - Bien"/>
+                                <f:selectItem itemValue="4" itemLabel="⭐⭐⭐⭐ 4 - Très bien"/>
+                                <f:selectItem itemValue="5" itemLabel="⭐⭐⭐⭐⭐ 5 - Excellent"/>
+                            </h:selectOneMenu>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="comment" value="Commentaire"/>
+                            <h:inputTextarea id="comment" value="#{profileBean.reviewComment}"
+                                             styleClass="form-control" rows="3"/>
+                        </div>
+
+                        <h:commandButton value="Publier l'avis" action="#{profileBean.submitReview}"
+                                         styleClass="btn btn-primary"/>
+                    </h:form>
+                </div>
+            </ui:fragment>
+
+            <!-- Reviews received -->
+            <div class="dashboard-section">
+                <h2>Avis reçus</h2>
+
+                <ui:repeat value="#{profileBean.userReviews}" var="review">
+                    <div class="review-card">
+                        <div class="review-stars">
+                            <ui:repeat begin="1" end="#{review.note}">★</ui:repeat>
+                        </div>
+                        <p class="review-comment">#{review.commentaire}</p>
+                        <p class="review-author">
+                            Par #{review.swapRequest.requester.nom} -
+                            Compétence : #{review.swapRequest.skillOffer.skill.titreCompetence}
+                        </p>
+                    </div>
+                </ui:repeat>
+
+                <ui:fragment rendered="#{empty profileBean.userReviews}">
+                    <p style="color: #888;">Aucun avis reçu pour le moment.</p>
+                </ui:fragment>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
