@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:c="jakarta.tags.core">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">SkillSwap - Catalogue</ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <h1>Catalogue des Compétences</h1>
+
+            <h:form>
+                <div class="catalog-header">
+                    <!-- Search -->
+                    <div class="search-bar">
+                        <h:inputText value="#{catalogBean.searchKeyword}"
+                                     styleClass="form-control"
+                                     placeholder="Rechercher une compétence..."/>
+                        <h:commandButton value="🔍 Rechercher"
+                                         action="#{catalogBean.search}"
+                                         styleClass="btn btn-primary"/>
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div class="filter-bar">
+                        <h:selectOneMenu value="#{catalogBean.selectedCategoryId}"
+                                         styleClass="form-control">
+                            <f:selectItem itemValue="" itemLabel="-- Toutes les catégories --"/>
+                            <f:selectItems value="#{catalogBean.categories}"
+                                           var="cat"
+                                           itemValue="#{cat.id}"
+                                           itemLabel="#{cat.nomCategorie}"/>
+                        </h:selectOneMenu>
+                        <h:commandButton value="Filtrer"
+                                         action="#{catalogBean.filterByCategory}"
+                                         styleClass="btn btn-secondary"/>
+                        <h:commandButton value="Réinitialiser"
+                                         action="#{catalogBean.resetFilters}"
+                                         styleClass="btn btn-sm"/>
+                    </div>
+                </div>
+            </h:form>
+
+            <!-- Offers Grid -->
+            <div class="offers-grid">
+                <ui:repeat value="#{catalogBean.offers}" var="offer">
+                    <div class="offer-card">
+                        <h3>#{offer.skill.titreCompetence}</h3>
+                        <div class="offer-meta">
+                            <span class="badge badge-category">#{offer.skill.category.nomCategorie}</span>
+                            <span class="badge badge-level">#{offer.niveau.label}</span>
+                        </div>
+                        <p class="offer-description">#{offer.descriptionOffre}</p>
+                        <div class="offer-footer">
+                            <span>Par <strong>#{offer.user.nom}</strong></span>
+                            <h:link value="Voir détails" outcome="/skill-details"
+                                    styleClass="btn btn-primary btn-sm">
+                                <f:param name="id" value="#{offer.id}"/>
+                            </h:link>
+                        </div>
+                    </div>
+                </ui:repeat>
+            </div>
+
+            <ui:fragment rendered="#{empty catalogBean.offers}">
+                <div style="text-align: center; padding: 3rem;">
+                    <p>Aucune compétence trouvée. Soyez le premier à publier !</p>
+                </div>
+            </ui:fragment>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
