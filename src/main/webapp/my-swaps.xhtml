@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">SkillSwap - Tableau de Bord</ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <h1>Mon Tableau de Bord</h1>
+            <h:messages globalOnly="true" styleClass="messages"/>
+
+            <!-- Stats -->
+            <div class="profile-stats">
+                <div class="stat-card">
+                    <div class="stat-value">#{authBean.loggedInUser.soldeHeures}</div>
+                    <div class="stat-label">Crédits Temps (heures)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">#{dashboardBean.completedCount}</div>
+                    <div class="stat-label">Échanges réalisés</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">#{dashboardBean.receivedRequests.size()}</div>
+                    <div class="stat-label">Demandes reçues</div>
+                </div>
+            </div>
+
+            <!-- Received Requests -->
+            <div class="dashboard-section">
+                <h2>📥 Demandes reçues</h2>
+
+                <ui:fragment rendered="#{not empty dashboardBean.receivedRequests}">
+                    <table class="swap-table">
+                        <thead>
+                        <tr>
+                            <th>Demandeur</th>
+                            <th>Compétence</th>
+                            <th>Date</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ui:repeat value="#{dashboardBean.receivedRequests}" var="req">
+                            <tr>
+                                <td>#{req.requester.nom}</td>
+                                <td>#{req.skillOffer.skill.titreCompetence}</td>
+                                <td>#{req.dateDemande}</td>
+                                <td>
+                                    <span class="badge badge-status #{dashboardBean.getStatusStyleClass(req.statut)}">
+                                        #{req.statut.label}
+                                    </span>
+                                </td>
+                                <td>
+                                    <h:form styleClass="actions-cell">
+                                        <h:commandButton value="✅ Accepter"
+                                                         action="#{dashboardBean.acceptRequest(req.id)}"
+                                                         rendered="#{req.statut == 'PENDING'}"
+                                                         styleClass="btn btn-sm btn-success"/>
+                                        <h:commandButton value="❌ Refuser"
+                                                         action="#{dashboardBean.rejectRequest(req.id)}"
+                                                         rendered="#{req.statut == 'PENDING'}"
+                                                         styleClass="btn btn-sm btn-danger"/>
+                                        <h:commandButton value="✔️ Terminer"
+                                                         action="#{dashboardBean.completeRequest(req.id)}"
+                                                         rendered="#{req.statut == 'ACCEPTED'}"
+                                                         styleClass="btn btn-sm btn-primary"/>
+                                    </h:form>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                        </tbody>
+                    </table>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{empty dashboardBean.receivedRequests}">
+                    <p style="color: #888; text-align: center; padding: 1rem;">
+                        Aucune demande reçue.
+                    </p>
+                </ui:fragment>
+            </div>
+
+            <!-- Sent Requests -->
+            <div class="dashboard-section">
+                <h2>📤 Demandes envoyées</h2>
+
+                <ui:fragment rendered="#{not empty dashboardBean.sentRequests}">
+                    <table class="swap-table">
+                        <thead>
+                        <tr>
+                            <th>Enseignant</th>
+                            <th>Compétence</th>
+                            <th>Date</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ui:repeat value="#{dashboardBean.sentRequests}" var="req">
+                            <tr>
+                                <td>#{req.provider.nom}</td>
+                                <td>#{req.skillOffer.skill.titreCompetence}</td>
+                                <td>#{req.dateDemande}</td>
+                                <td>
+                                    <span class="badge badge-status #{dashboardBean.getStatusStyleClass(req.statut)}">
+                                        #{req.statut.label}
+                                    </span>
+                                </td>
+                                <td>
+                                    <ui:fragment rendered="#{req.statut == 'COMPLETED' and req.review == null}">
+                                        <h:link value="⭐ Laisser un avis" outcome="/profile"
+                                                styleClass="btn btn-sm btn-secondary">
+                                            <f:param name="reviewSwapId" value="#{req.id}"/>
+                                        </h:link>
+                                    </ui:fragment>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                        </tbody>
+                    </table>
+                </ui:fragment>
+
+                <ui:fragment rendered="#{empty dashboardBean.sentRequests}">
+                    <p style="color: #888; text-align: center; padding: 1rem;">
+                        Aucune demande envoyée.
+                    </p>
+                </ui:fragment>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
