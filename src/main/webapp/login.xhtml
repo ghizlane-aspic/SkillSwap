@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>SkillSwap - Connexion</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="auth-card">
+            <h1>Connexion</h1>
+            <h:messages globalOnly="true" styleClass="messages error"/>
+
+            <h:form>
+                <div class="form-group">
+                    <h:outputLabel for="email" value="Email"/>
+                    <h:inputText id="email" value="#{authBean.email}"
+                                 required="true" requiredMessage="L'email est requis"
+                                 styleClass="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="password" value="Mot de passe"/>
+                    <h:inputSecret id="password" value="#{authBean.password}"
+                                   required="true" requiredMessage="Le mot de passe est requis"
+                                   styleClass="form-control"/>
+                </div>
+
+                <h:commandButton value="Se connecter" action="#{authBean.login}"
+                                 styleClass="btn btn-primary"/>
+            </h:form>
+
+            <p class="auth-link">
+                Pas encore de compte ?
+                <h:link value="S'inscrire" outcome="register"/>
+            </p>
+        </div>
+    </div>
+</h:body>
+</html>

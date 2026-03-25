@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+    <title>SkillSwap - Inscription</title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+    <div class="container">
+        <div class="auth-card">
+            <h1>Inscription</h1>
+            <h:messages globalOnly="true" styleClass="messages"/>
+
+            <h:form>
+                <div class="form-group">
+                    <h:outputLabel for="nom" value="Nom complet"/>
+                    <h:inputText id="nom" value="#{registerBean.nom}"
+                                 required="true" requiredMessage="Le nom est requis"
+                                 styleClass="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="email" value="Email"/>
+                    <h:inputText id="email" value="#{registerBean.email}"
+                                 required="true" requiredMessage="L'email est requis"
+                                 styleClass="form-control">
+                        <f:validateRegex pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+                    </h:inputText>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="ville" value="Ville"/>
+                    <h:inputText id="ville" value="#{registerBean.ville}"
+                                 styleClass="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="password" value="Mot de passe"/>
+                    <h:inputSecret id="password" value="#{registerBean.password}"
+                                   required="true" requiredMessage="Le mot de passe est requis"
+                                   styleClass="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <h:outputLabel for="confirmPassword" value="Confirmer le mot de passe"/>
+                    <h:inputSecret id="confirmPassword" value="#{registerBean.confirmPassword}"
+                                   required="true" requiredMessage="La confirmation est requise"
+                                   styleClass="form-control"/>
+                </div>
+
+                <h:commandButton value="S'inscrire" action="#{registerBean.register}"
+                                 styleClass="btn btn-primary"/>
+            </h:form>
+
+            <p class="auth-link">
+                Déjà un compte ?
+                <h:link value="Se connecter" outcome="login"/>
+            </p>
+        </div>
+    </div>
+</h:body>
+</html>
