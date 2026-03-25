@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">SkillSwap - Accueil</ui:define>
+
+    <ui:define name="content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Échangez vos compétences,<br/>enrichissez votre savoir</h1>
+            <p class="hero-subtitle">
+                Apprenez et enseignez sans dépenser un centime.
+                Votre monnaie, c'est le <strong>Crédit Temps</strong>.
+            </p>
+            <div class="hero-actions">
+                <h:link value="Découvrir le catalogue" outcome="/catalog" styleClass="btn btn-primary btn-lg"/>
+                <ui:fragment rendered="#{!authBean.loggedIn}">
+                    <h:link value="Rejoindre la communauté" outcome="/register" styleClass="btn btn-secondary btn-lg"/>
+                </ui:fragment>
+            </div>
+        </section>
+
+        <!-- How it works -->
+        <section class="how-it-works">
+            <h2>Comment ça marche ?</h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Inscrivez-vous</h3>
+                    <p>Créez votre compte et recevez 3 heures de crédit de bienvenue.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Publiez vos talents</h3>
+                    <p>Partagez vos compétences : musique, langues, informatique, cuisine...</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Demandez un Swap</h3>
+                    <p>Trouvez un membre qui possède la compétence que vous recherchez.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Échangez !</h3>
+                    <p>1 heure enseignée = 1 crédit gagné. 1 heure apprise = 1 crédit dépensé.</p>
+                </div>
+            </div>
+        </section>
+    </ui:define>
+</ui:composition>
+</html>

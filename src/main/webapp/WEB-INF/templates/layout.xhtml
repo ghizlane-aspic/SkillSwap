@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:f="jakarta.faces.core">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>
+        <ui:insert name="title">SkillSwap</ui:insert>
+    </title>
+    <h:outputStylesheet name="css/style.css"/>
+</h:head>
+
+<h:body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h:link value="🔄 SkillSwap" outcome="/index" styleClass="brand-link"/>
+        </div>
+        <div class="nav-links">
+            <h:link value="Catalogue" outcome="/catalog" styleClass="nav-link"/>
+
+            <ui:fragment rendered="#{authBean.loggedIn}">
+                <h:link value="Mes Compétences" outcome="/manage-skills" styleClass="nav-link"/>
+                <h:link value="Mes Swaps" outcome="/my-swaps" styleClass="nav-link"/>
+                <h:link value="Mon Profil" outcome="/profile" styleClass="nav-link"/>
+                <span class="nav-credits">
+                    ⏱ #{authBean.loggedInUser.soldeHeures}h
+                </span>
+                <h:form styleClass="nav-form">
+                    <h:commandLink value="Déconnexion" action="#{authBean.logout}" styleClass="nav-link logout"/>
+                </h:form>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{!authBean.loggedIn}">
+                <h:link value="Connexion" outcome="/login" styleClass="nav-link"/>
+                <h:link value="Inscription" outcome="/register" styleClass="nav-link btn-nav"/>
+            </ui:fragment>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <ui:insert name="content">
+            <!-- Page content goes here -->
+        </ui:insert>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 SkillSwap - "Le savoir ne vaut que s'il est partagé par tous"</p>
+        <p>ENSA Tanger - Développement Web Java (JSF / Hibernate)</p>
+    </footer>
+</h:body>
+</html>
