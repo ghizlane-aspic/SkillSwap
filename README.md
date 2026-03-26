@@ -26,3 +26,54 @@ SkillSwap est une plateforme collaborative d'échange de compétences basée sur
    ```bash
    git clone https://github.com/votre-user/SkillSwap.git
    cd SkillSwap
+
+
+## 🗄️ Base de données
+
+Créer la base de données MySQL :
+
+```sql
+CREATE DATABASE skillswap;
+````
+
+Configurer la connexion dans :
+
+```
+src/main/resources/META-INF/persistence.xml
+```
+
+Compiler le projet :
+
+```bash
+mvn clean package
+```
+
+Déployer le fichier suivant sur votre serveur :
+
+```
+target/SkillSwap-1.0-SNAPSHOT.war
+```
+
+---
+
+## 📦 Architecture
+
+```
+MVC (Model-View-Controller)
+├── Model      → JPA Entities (Hibernate)
+├── View       → JSF Pages (.xhtml)
+├── Controller → CDI Managed Beans
+├── DAO        → Data Access Objects
+└── Service    → Business Logic
+```
+
+---
+
+## 👥 Équipe
+
+* HASSOUN Aya
+* TOUGUI Ghizlane
+
+**Encadré par :** Mme BEL MOKADEM Houda
+**Établissement :** ENSA Tanger
+**Module :** Développement Web Java (JSF / Hibernate)
