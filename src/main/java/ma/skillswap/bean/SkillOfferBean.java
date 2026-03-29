@@ -90,4 +90,8 @@ public class SkillOfferBean implements Serializable {
     public List<Review> getProviderReviews() { return providerReviews; }
 
     public Double getProviderAverageRating() { return providerAverageRating; }
+    public String getStars(Integer note) {
+        if (note == null) return "";
+        return "★".repeat(note) + "☆".repeat(5 - note);
+    }
 }

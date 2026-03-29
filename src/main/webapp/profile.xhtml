@@ -136,9 +136,7 @@
 
                 <ui:repeat value="#{profileBean.userReviews}" var="review">
                     <div class="review-card">
-                        <div class="review-stars">
-                            <ui:repeat begin="1" end="#{review.note}">★</ui:repeat>
-                        </div>
+                        <div class="review-stars">#{profileBean.getStars(review.note)}</div>
                         <p class="review-comment">#{review.commentaire}</p>
                         <p class="review-author">
                             Par #{review.swapRequest.requester.nom} -
