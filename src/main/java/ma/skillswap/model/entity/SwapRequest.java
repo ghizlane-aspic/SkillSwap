@@ -10,10 +10,14 @@ import java.util.List;
 @Entity
 @Table(name = "swap_requests")
 @NamedQueries({
-        @NamedQuery(name = "SwapRequest.findByRequester", query = "SELECT sr FROM SwapRequest sr WHERE sr.requester.id = :userId ORDER BY sr.dateDemande DESC"),
-        @NamedQuery(name = "SwapRequest.findByProvider", query = "SELECT sr FROM SwapRequest sr WHERE sr.provider.id = :userId ORDER BY sr.dateDemande DESC"),
-        @NamedQuery(name = "SwapRequest.findByStatus", query = "SELECT sr FROM SwapRequest sr WHERE sr.statut = :status"),
-        @NamedQuery(name = "SwapRequest.countByUser", query = "SELECT COUNT(sr) FROM SwapRequest sr WHERE (sr.requester.id = :userId OR sr.provider.id = :userId) AND sr.statut = :status")
+        @NamedQuery(name = "SwapRequest.findByRequester",
+                query = "SELECT sr FROM SwapRequest sr JOIN FETCH sr.skillOffer JOIN FETCH sr.skillOffer.skill JOIN FETCH sr.skillOffer.skill.category JOIN FETCH sr.provider WHERE sr.requester.id = :userId ORDER BY sr.dateDemande DESC"),
+        @NamedQuery(name = "SwapRequest.findByProvider",
+                query = "SELECT sr FROM SwapRequest sr JOIN FETCH sr.skillOffer JOIN FETCH sr.skillOffer.skill JOIN FETCH sr.skillOffer.skill.category JOIN FETCH sr.requester WHERE sr.provider.id = :userId ORDER BY sr.dateDemande DESC"),
+        @NamedQuery(name = "SwapRequest.findByStatus",
+                query = "SELECT sr FROM SwapRequest sr JOIN FETCH sr.skillOffer JOIN FETCH sr.requester JOIN FETCH sr.provider WHERE sr.statut = :status"),
+        @NamedQuery(name = "SwapRequest.countByUser",
+                query = "SELECT COUNT(sr) FROM SwapRequest sr WHERE (sr.requester.id = :userId OR sr.provider.id = :userId) AND sr.statut = :status")
 })
 public class SwapRequest implements Serializable {
 

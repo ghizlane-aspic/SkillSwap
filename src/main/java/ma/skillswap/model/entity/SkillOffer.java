@@ -10,11 +10,16 @@ import java.util.List;
 @Entity
 @Table(name = "skill_offers")
 @NamedQueries({
-        @NamedQuery(name = "SkillOffer.findAll", query = "SELECT so FROM SkillOffer so ORDER BY so.datePublication DESC"),
-        @NamedQuery(name = "SkillOffer.findByUser", query = "SELECT so FROM SkillOffer so WHERE so.user.id = :userId"),
-        @NamedQuery(name = "SkillOffer.findBySkill", query = "SELECT so FROM SkillOffer so WHERE so.skill.id = :skillId"),
-        @NamedQuery(name = "SkillOffer.findByCategory", query = "SELECT so FROM SkillOffer so WHERE so.skill.category.id = :categoryId"),
-        @NamedQuery(name = "SkillOffer.search", query = "SELECT so FROM SkillOffer so WHERE LOWER(so.descriptionOffre) LIKE LOWER(:keyword) OR LOWER(so.skill.titreCompetence) LIKE LOWER(:keyword)")
+        @NamedQuery(name = "SkillOffer.findAll",
+                query = "SELECT so FROM SkillOffer so JOIN FETCH so.skill JOIN FETCH so.skill.category JOIN FETCH so.user ORDER BY so.datePublication DESC"),
+        @NamedQuery(name = "SkillOffer.findByUser",
+                query = "SELECT so FROM SkillOffer so JOIN FETCH so.skill JOIN FETCH so.skill.category JOIN FETCH so.user WHERE so.user.id = :userId"),
+        @NamedQuery(name = "SkillOffer.findBySkill",
+                query = "SELECT so FROM SkillOffer so JOIN FETCH so.skill JOIN FETCH so.skill.category JOIN FETCH so.user WHERE so.skill.id = :skillId"),
+        @NamedQuery(name = "SkillOffer.findByCategory",
+                query = "SELECT so FROM SkillOffer so JOIN FETCH so.skill JOIN FETCH so.skill.category JOIN FETCH so.user WHERE so.skill.category.id = :categoryId"),
+        @NamedQuery(name = "SkillOffer.search",
+                query = "SELECT so FROM SkillOffer so JOIN FETCH so.skill JOIN FETCH so.skill.category JOIN FETCH so.user WHERE LOWER(so.descriptionOffre) LIKE LOWER(:keyword) OR LOWER(so.skill.titreCompetence) LIKE LOWER(:keyword)")
 })
 public class SkillOffer implements Serializable {
 

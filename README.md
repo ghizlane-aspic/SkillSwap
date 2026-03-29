@@ -45,7 +45,7 @@ src/main/resources/META-INF/persistence.xml
 Compiler le projet :
 
 ```bash
-mvn clean package
+²
 ```
 
 Déployer le fichier suivant sur votre serveur :

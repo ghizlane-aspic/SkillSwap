@@ -6,8 +6,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "reviews")
 @NamedQueries({
-        @NamedQuery(name = "Review.findByProvider", query = "SELECT r FROM Review r WHERE r.swapRequest.provider.id = :providerId ORDER BY r.id DESC"),
-        @NamedQuery(name = "Review.averageByProvider", query = "SELECT AVG(r.note) FROM Review r WHERE r.swapRequest.provider.id = :providerId")
+        @NamedQuery(name = "Review.findByProvider",
+                query = "SELECT r FROM Review r JOIN FETCH r.swapRequest JOIN FETCH r.swapRequest.requester JOIN FETCH r.swapRequest.skillOffer JOIN FETCH r.swapRequest.skillOffer.skill WHERE r.swapRequest.provider.id = :providerId ORDER BY r.id DESC"),
+        @NamedQuery(name = "Review.averageByProvider",
+                query = "SELECT AVG(r.note) FROM Review r WHERE r.swapRequest.provider.id = :providerId")
 })
 public class Review implements Serializable {
 
