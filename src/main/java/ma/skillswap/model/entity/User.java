@@ -9,8 +9,10 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @NamedQueries({
-        @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-        @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u ORDER BY u.dateInscription DESC")
+        @NamedQuery(name = "User.findByEmail",
+                query = "SELECT u FROM User u WHERE u.email = :email"),
+        @NamedQuery(name = "User.findAll",
+                query = "SELECT u FROM User u ORDER BY u.dateInscription DESC")
 })
 public class User implements Serializable {
 
