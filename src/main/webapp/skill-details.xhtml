@@ -72,11 +72,7 @@
                     <h2>Avis sur #{skillOfferBean.offer.user.nom}</h2>
                     <ui:repeat value="#{skillOfferBean.providerReviews}" var="review">
                         <div class="review-card">
-                            <div class="review-stars">
-                                <ui:repeat value="#{review.note}" var="star" begin="1" end="#{review.note}">
-                                    ★
-                                </ui:repeat>
-                            </div>
+                            <div class="review-stars">#{skillOfferBean.getStars(review.note)}</div>
                             <p class="review-comment">#{review.commentaire}</p>
                         </div>
                     </ui:repeat>

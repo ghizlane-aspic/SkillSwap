@@ -130,4 +130,8 @@ public class ProfileBean implements Serializable {
 
     public String getReviewComment() { return reviewComment; }
     public void setReviewComment(String reviewComment) { this.reviewComment = reviewComment; }
+    public String getStars(Integer note) {
+        if (note == null) return "";
+        return "★".repeat(note) + "☆".repeat(5 - note);
+    }
 }
