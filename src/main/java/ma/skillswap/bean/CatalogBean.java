@@ -11,6 +11,7 @@ import ma.skillswap.service.SkillOfferService;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Named
 @ViewScoped
@@ -22,7 +23,11 @@ public class CatalogBean implements Serializable {
     @Inject
     private CategoryService categoryService;
 
-    private List<SkillOffer> offers;
+    @Inject
+    private AuthBean authBean;
+
+    private List<SkillOffer> myOffers;
+    private List<SkillOffer> otherOffers;
     private List<Category> categories;
     private String searchKeyword;
     private Long selectedCategoryId;
@@ -34,12 +39,25 @@ public class CatalogBean implements Serializable {
     }
 
     public void loadOffers() {
-        offers = skillOfferService.findAll();
+        List<SkillOffer> allOffers = skillOfferService.findAll();
+        if (authBean.isLoggedIn()) {
+            Long userId = authBean.getLoggedInUser().getId();
+            myOffers = allOffers.stream()
+                    .filter(offer -> offer.getUser().getId().equals(userId))
+                    .collect(Collectors.toList());
+            otherOffers = allOffers.stream()
+                    .filter(offer -> !offer.getUser().getId().equals(userId))
+                    .collect(Collectors.toList());
+        } else {
+            myOffers = null;
+            otherOffers = allOffers;
+        }
     }
 
     public void search() {
         if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
-            offers = skillOfferService.search(searchKeyword.trim());
+            List<SkillOffer> searched = skillOfferService.search(searchKeyword.trim());
+            applyFiltersToLists(searched);
         } else {
             loadOffers();
         }
@@ -47,9 +65,25 @@ public class CatalogBean implements Serializable {
 
     public void filterByCategory() {
         if (selectedCategoryId != null && selectedCategoryId > 0) {
-            offers = skillOfferService.findByCategory(selectedCategoryId);
+            List<SkillOffer> filtered = skillOfferService.findByCategory(selectedCategoryId);
+            applyFiltersToLists(filtered);
         } else {
             loadOffers();
+        }
+    }
+
+    private void applyFiltersToLists(List<SkillOffer> allFiltered) {
+        if (authBean.isLoggedIn()) {
+            Long userId = authBean.getLoggedInUser().getId();
+            myOffers = allFiltered.stream()
+                    .filter(offer -> offer.getUser().getId().equals(userId))
+                    .collect(Collectors.toList());
+            otherOffers = allFiltered.stream()
+                    .filter(offer -> !offer.getUser().getId().equals(userId))
+                    .collect(Collectors.toList());
+        } else {
+            myOffers = null;
+            otherOffers = allFiltered;
         }
     }
 
@@ -60,8 +94,9 @@ public class CatalogBean implements Serializable {
     }
 
     // Getters & Setters
-    public List<SkillOffer> getOffers() { return offers; }
-    public void setOffers(List<SkillOffer> offers) { this.offers = offers; }
+    public List<SkillOffer> getMyOffers() { return myOffers; }
+
+    public List<SkillOffer> getOtherOffers() { return otherOffers; }
 
     public List<Category> getCategories() { return categories; }
 

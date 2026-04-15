@@ -45,9 +45,34 @@
                 </div>
             </h:form>
 
-            <!-- Offers Grid -->
+            <!-- My Offers Section -->
+            <ui:fragment rendered="#{not empty catalogBean.myOffers}">
+                <h2>Mes Compétences</h2>
+                <div class="offers-grid">
+                    <ui:repeat value="#{catalogBean.myOffers}" var="offer">
+                        <div class="offer-card">
+                            <h3>#{offer.skill.titreCompetence}</h3>
+                            <div class="offer-meta">
+                                <span class="badge badge-category">#{offer.skill.category.nomCategorie}</span>
+                                <span class="badge badge-level">#{offer.niveau.label}</span>
+                            </div>
+                            <p class="offer-description">#{offer.descriptionOffre}</p>
+                            <div class="offer-footer">
+                                <span>Par <strong>vous</strong></span>
+                                <h:link value="Voir détails" outcome="/skill-details"
+                                        styleClass="btn btn-primary btn-sm">
+                                    <f:param name="id" value="#{offer.id}"/>
+                                </h:link>
+                            </div>
+                        </div>
+                    </ui:repeat>
+                </div>
+            </ui:fragment>
+
+            <!-- Other Offers Section -->
+            <h2>Compétences Disponibles</h2>
             <div class="offers-grid">
-                <ui:repeat value="#{catalogBean.offers}" var="offer">
+                <ui:repeat value="#{catalogBean.otherOffers}" var="offer">
                     <div class="offer-card">
                         <h3>#{offer.skill.titreCompetence}</h3>
                         <div class="offer-meta">
@@ -66,7 +91,7 @@
                 </ui:repeat>
             </div>
 
-            <ui:fragment rendered="#{empty catalogBean.offers}">
+            <ui:fragment rendered="#{empty catalogBean.otherOffers}">
                 <div style="text-align: center; padding: 3rem;">
                     <p>Aucune compétence trouvée. Soyez le premier à publier !</p>
                 </div>
