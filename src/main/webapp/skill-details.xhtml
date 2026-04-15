@@ -14,6 +14,14 @@
                 <div class="dashboard-section">
                     <h:messages globalOnly="true" styleClass="messages"/>
 
+                    <h:panelGroup rendered="#{not empty skillOfferBean.toastScript}">
+                        <h:outputScript>
+                            //<![CDATA[
+        #{skillOfferBean.toastScript}
+        //]]>
+                        </h:outputScript>
+                    </h:panelGroup>
+
                     <h1>#{skillOfferBean.offer.skill.titreCompetence}</h1>
 
                     <div class="offer-meta" style="margin: 1rem 0;">
@@ -46,10 +54,24 @@
 
                     <!-- Swap Request Button -->
                     <ui:fragment rendered="#{authBean.loggedIn and !skillOfferBean.ownOffer}">
-                        <h:form style="margin-top: 1.5rem;">
+                        <h:form style="margin-top: 1.5rem;" id="swapForm">
                             <h:commandButton value="🔄 Demander un Swap"
                                              action="#{skillOfferBean.requestSwap}"
-                                             styleClass="btn btn-primary btn-lg"/>
+                                             styleClass="btn btn-primary btn-lg">
+                                <f:ajax execute="@form" render="swapToast"/>
+                            </h:commandButton>
+
+                            <h:panelGroup id="swapToast">
+                                <h:panelGroup rendered="#{not empty skillOfferBean.toastScript}">
+                                    <h:outputScript>
+                                        //<![CDATA[
+                    setTimeout(function() {
+                        #{skillOfferBean.toastScript}
+                    }, 100);
+                    //]]>
+                                    </h:outputScript>
+                                </h:panelGroup>
+                            </h:panelGroup>
                         </h:form>
                     </ui:fragment>
 

@@ -54,5 +54,48 @@
         <p>© 2024 SkillSwap - "Le savoir ne vaut que s'il est partagé par tous"</p>
         <p>ENSA Tanger - Développement Web Java (JSF / Hibernate)</p>
     </footer>
+
+    <!-- Toast notification system -->
+    <div id="skillswap-toast-container" style="position:fixed;top:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;"></div>
+
+    <style>
+        .ss-toast{display:flex;align-items:flex-start;gap:12px;background:white;border:0.5px solid #e0e0e0;border-left:3px solid;border-radius:12px;padding:14px 18px;min-width:280px;max-width:360px;pointer-events:all;transform:translateX(120%);transition:transform .35s cubic-bezier(.34,1.56,.64,1);box-sizing:border-box;}
+        .ss-toast.show{transform:translateX(0);}
+        .ss-toast.success{border-left-color:#1D9E75;}
+        .ss-toast.error{border-left-color:#E24B4A;}
+        .ss-toast-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;flex-shrink:0;margin-top:1px;}
+        .ss-toast.success .ss-toast-icon{background:#E1F5EE;color:#0F6E56;}
+        .ss-toast.error .ss-toast-icon{background:#FCEBEB;color:#A32D2D;}
+        .ss-toast-title{font-size:14px;font-weight:600;margin:0 0 2px;color:#333;}
+        .ss-toast-msg{font-size:13px;color:#666;margin:0;line-height:1.5;}
+        .ss-toast-close{background:none;border:none;cursor:pointer;color:#999;font-size:18px;line-height:1;padding:0;flex-shrink:0;}
+    </style>
+
+    <script>
+        //<![CDATA[
+        var _ssToastId = 0;
+        function ssToast(type, title, msg, duration) {
+            var tc = document.getElementById('skillswap-toast-container');
+            var id = 'sst' + (++_ssToastId);
+            var icon = type === 'success' ? '✓' : '✕';
+            var el = document.createElement('div');
+            el.className = 'ss-toast ' + type;
+            el.id = id;
+            el.innerHTML = '<div class="ss-toast-icon">' + icon + '</div>'
+                + '<div style="flex:1"><p class="ss-toast-title">' + title + '</p>'
+                + '<p class="ss-toast-msg">' + msg + '</p></div>'
+                + '<button class="ss-toast-close" onclick="ssDismiss(this.parentNode.id)">x</button>';
+            tc.appendChild(el);
+            requestAnimationFrame(function() { el.classList.add('show'); });
+            setTimeout(function() { ssDismiss(id); }, duration || 4000);
+        }
+        function ssDismiss(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            el.classList.remove('show');
+            setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
+        }
+        //]]>
+    </script>
 </h:body>
 </html>

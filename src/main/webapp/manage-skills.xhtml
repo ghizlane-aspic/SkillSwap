@@ -11,6 +11,17 @@
     <ui:define name="content">
         <div class="container">
             <h1>Gérer mes Compétences</h1>
+
+            <h:panelGroup rendered="#{not empty manageSkillsBean.toastScript}">
+                <h:outputScript>
+                    //<![CDATA[
+        setTimeout(function() {
+            #{manageSkillsBean.toastScript}
+        }, 100);
+        //]]>
+                </h:outputScript>
+            </h:panelGroup>
+
             <h:messages globalOnly="true" styleClass="messages"/>
 
             <!-- Form to add/edit offer -->

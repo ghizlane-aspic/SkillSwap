@@ -20,6 +20,10 @@ import java.util.List;
 @ViewScoped
 public class SkillOfferBean implements Serializable {
 
+    private String toastScript;
+
+    public String getToastScript() { return toastScript; }
+
     @Inject
     private SkillOfferService skillOfferService;
 
@@ -60,20 +64,15 @@ public class SkillOfferBean implements Serializable {
         if (!authBean.isLoggedIn()) {
             return "/login.xhtml?faces-redirect=true";
         }
-
         try {
             User requester = authBean.getLoggedInUser();
             swapRequestService.createRequest(requester, offer);
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO,
-                            "Demande de swap envoyée avec succès !", null));
+            toastScript = "ssToast('success','Demande envoyée !','Votre demande de swap a été transmise avec succès.');";
         } catch (IllegalArgumentException e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), null));
+            toastScript = "ssToast('error','Erreur','" + e.getMessage() + "');";
         }
         return null;
     }
-
     public boolean isOwnOffer() {
         if (authBean.isLoggedIn() && offer != null) {
             return authBean.getLoggedInUser().getId().equals(offer.getUser().getId());
