@@ -103,7 +103,7 @@ public class ManageSkillsBean implements Serializable {
             Category category = categoryService.findById(newSkillCategoryId);
             Skill skill = new Skill(newSkillTitle, category);
             skillService.save(skill);
-            skills = skillService.findAll();
+            loadSkillsByCategory();
             toastScript = "ssToast('success','Compétence créée !','" + newSkillTitle + " a été ajoutée avec succès.');";
             newSkillTitle = null;
             newSkillCategoryId = null;

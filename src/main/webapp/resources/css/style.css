@@ -50,6 +50,12 @@ a {
     color: white !important;
 }
 
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+}
+
 .nav-credits {
     background: rgba(255, 255, 255, 0.2);
     padding: 0.3rem 0.8rem;
