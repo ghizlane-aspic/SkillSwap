@@ -21,6 +21,10 @@ import java.util.List;
 @ViewScoped
 public class ManageSkillsBean implements Serializable {
 
+    private String toastScript;
+
+    public String getToastScript() { return toastScript; }
+
     @Inject
     private SkillOfferService skillOfferService;
 
@@ -72,7 +76,6 @@ public class ManageSkillsBean implements Serializable {
     public String saveOffer() {
         try {
             if (editingOfferId != null) {
-                // Update
                 SkillOffer offer = skillOfferService.findById(editingOfferId);
                 offer.setDescriptionOffre(descriptionOffre);
                 offer.setNiveau(niveau);
@@ -80,44 +83,35 @@ public class ManageSkillsBean implements Serializable {
                     offer.setSkill(skillService.findById(selectedSkillId));
                 }
                 skillOfferService.update(offer);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Offre mise à jour avec succès !", null));
+                toastScript = "ssToast('success','Offre mise à jour !','Votre offre a été modifiée avec succès.');";
             } else {
-                // Create
                 Skill skill = skillService.findById(selectedSkillId);
                 SkillOffer offer = new SkillOffer(descriptionOffre, niveau,
                         authBean.getLoggedInUser(), skill);
                 skillOfferService.save(offer);
-                FacesContext.getCurrentInstance().addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Offre créée avec succès !", null));
+                toastScript = "ssToast('success','Offre publiée !','Votre compétence est maintenant visible dans le catalogue.');";
             }
-
             resetForm();
             loadMyOffers();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur : " + e.getMessage(), null));
+            toastScript = "ssToast('error','Erreur','" + e.getMessage() + "');";
         }
         return null;
     }
-
     public String createNewSkill() {
         try {
             Category category = categoryService.findById(newSkillCategoryId);
             Skill skill = new Skill(newSkillTitle, category);
             skillService.save(skill);
             skills = skillService.findAll();
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Compétence '" + newSkillTitle + "' ajoutée !", null));
+            toastScript = "ssToast('success','Compétence créée !','" + newSkillTitle + " a été ajoutée avec succès.');";
             newSkillTitle = null;
             newSkillCategoryId = null;
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur : " + e.getMessage(), null));
+            toastScript = "ssToast('error','Erreur','" + e.getMessage() + "');";
         }
         return null;
     }
-
     public void editOffer(SkillOffer offer) {
         editingOfferId = offer.getId();
         descriptionOffre = offer.getDescriptionOffre();
