@@ -34,6 +34,12 @@ a {
     font-weight: bold;
 }
 
+.brand-link.active {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+}
+
 .nav-links {
     display: flex;
     align-items: center;

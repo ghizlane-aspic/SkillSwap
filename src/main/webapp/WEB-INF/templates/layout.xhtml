@@ -18,15 +18,15 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-brand">
-            <h:link value="🔄 SkillSwap" outcome="/index" styleClass="brand-link"/>
+            <h:link value="🔄 SkillSwap" outcome="/index" styleClass="#{facesContext.viewRoot.viewId == '/index.xhtml' ? 'brand-link active' : 'brand-link'}"/>
         </div>
         <div class="nav-links">
-            <h:link value="Catalogue" outcome="/catalog" styleClass="nav-link"/>
+            <h:link value="Catalogue" outcome="/catalog" styleClass="#{facesContext.viewRoot.viewId == '/catalog.xhtml' ? 'nav-link active' : 'nav-link'}"/>
 
             <ui:fragment rendered="#{authBean.loggedIn}">
-                <h:link value="Mes Compétences" outcome="/manage-skills" styleClass="nav-link"/>
-                <h:link value="Mes Swaps" outcome="/my-swaps" styleClass="nav-link"/>
-                <h:link value="Mon Profil" outcome="/profile" styleClass="nav-link"/>
+                <h:link value="Mes Compétences" outcome="/manage-skills" styleClass="#{facesContext.viewRoot.viewId == '/manage-skills.xhtml' ? 'nav-link active' : 'nav-link'}"/>
+                <h:link value="Mes Swaps" outcome="/my-swaps" styleClass="#{facesContext.viewRoot.viewId == '/my-swaps.xhtml' ? 'nav-link active' : 'nav-link'}"/>
+                <h:link value="Mon Profil" outcome="/profile" styleClass="#{facesContext.viewRoot.viewId == '/profile.xhtml' ? 'nav-link active' : 'nav-link'}"/>
                 <span class="nav-credits">
                     ⏱ #{authBean.loggedInUser.soldeHeures}h
                 </span>
@@ -36,8 +36,8 @@
             </ui:fragment>
 
             <ui:fragment rendered="#{!authBean.loggedIn}">
-                <h:link value="Connexion" outcome="/login" styleClass="nav-link"/>
-                <h:link value="Inscription" outcome="/register" styleClass="nav-link btn-nav"/>
+                <h:link value="Connexion" outcome="/login" styleClass="#{facesContext.viewRoot.viewId == '/login.xhtml' ? 'nav-link active' : 'nav-link'}"/>
+                <h:link value="Inscription" outcome="/register" styleClass="#{facesContext.viewRoot.viewId == '/register.xhtml' ? 'nav-link active' : 'nav-link btn-nav'}"/>
             </ui:fragment>
         </div>
     </nav>
