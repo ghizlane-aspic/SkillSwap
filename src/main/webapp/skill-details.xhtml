@@ -57,7 +57,8 @@
                         <h:form style="margin-top: 1.5rem;" id="swapForm">
                             <h:commandButton value="🔄 Demander un Swap"
                                              action="#{skillOfferBean.requestSwap}"
-                                             styleClass="btn btn-primary btn-lg">
+                                             styleClass="btn btn-primary btn-lg"
+                                             onclick="return confirm('Envoyer une demande de swap ? Cela utilisera 1 crédit temps de votre solde.')">
                                 <f:ajax execute="@form" render="swapToast"/>
                             </h:commandButton>
 

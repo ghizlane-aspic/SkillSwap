@@ -60,15 +60,18 @@
                                         <h:commandButton value="✅ Accepter"
                                                          action="#{dashboardBean.acceptRequest(req.id)}"
                                                          rendered="#{req.statut == 'PENDING'}"
-                                                         styleClass="btn btn-sm btn-success"/>
+                                                         styleClass="btn btn-sm btn-success"
+                                                         onclick="return confirm('Accepter la demande de #{req.requester.nom} ?')"/>
                                         <h:commandButton value="❌ Refuser"
                                                          action="#{dashboardBean.rejectRequest(req.id)}"
                                                          rendered="#{req.statut == 'PENDING'}"
-                                                         styleClass="btn btn-sm btn-danger"/>
+                                                         styleClass="btn btn-sm btn-danger"
+                                                         onclick="return confirm('Refuser cette demande ? Cette action est irréversible.')"/>
                                         <h:commandButton value="✔️ Terminer"
                                                          action="#{dashboardBean.completeRequest(req.id)}"
                                                          rendered="#{req.statut == 'ACCEPTED'}"
-                                                         styleClass="btn btn-sm btn-primary"/>
+                                                         styleClass="btn btn-sm btn-primary"
+                                                         onclick="return confirm('Terminer cet échange ? Les crédits seront transférés immédiatement.')"/>
                                     </h:form>
                                 </td>
                             </tr>
