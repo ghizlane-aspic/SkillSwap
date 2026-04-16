@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="https://jakarta.ee/xml/ns/jakartaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+              https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_4_0.xsd"
+              version="4.0">
+
+    <!-- ========== AUTHENTIFICATION ========== -->
+
+    <!-- Login : succès → dashboard -->
+    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{authBean.login}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/my-swaps.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{authBean.login}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- Déconnexion → accueil -->
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-action>#{authBean.logout}</from-action>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- ========== INSCRIPTION ========== -->
+
+    <!-- Register : succès → login -->
+    <navigation-rule>
+        <from-view-id>/register.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{registerBean.register}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{registerBean.register}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/register.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <!-- ========== DEMANDE DE SWAP ========== -->
+
+    <!-- Swap non connecté → login -->
+    <navigation-rule>
+        <from-view-id>/skill-details.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{skillOfferBean.requestSwap}</from-action>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+</faces-config>
