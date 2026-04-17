@@ -25,8 +25,8 @@
                 </div>
                 <div class="stat-card">
                     <div class="stat-value">
-                        #{profileBean.averageRating != null ?
-                          String.format('%.1f', profileBean.averageRating) : 'N/A'}
+                        #{profileBean.averageRating != null and profileBean.averageRating > 0
+                          ? profileBean.formattedRating : 'N/A'}
                     </div>
                     <div class="stat-label">Note moyenne ⭐</div>
                 </div>

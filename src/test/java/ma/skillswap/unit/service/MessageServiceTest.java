@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * ╔══════════════════════════════════════════════════════════════╗
- * ║  TESTS - MessageService                                     ║
+ * ║  TESTS - MessageService                                      ║
  * ║  Fonctionnalité : Messagerie entre participants              ║
  * ╚══════════════════════════════════════════════════════════════╝
  *
@@ -23,8 +23,8 @@ import static org.mockito.Mockito.*;
  * │ ID  │ Description                             │ Résultat Attendu         │ Statut   │
  * ├─────┼─────────────────────────────────────────┼──────────────────────────┼──────────┤
  * │ MS1 │ Envoyer un message valide               │ Message sauvegardé       │ ✅ PASS  │
- * │ MS2 │ Envoyer un message vide                 │ IllegalArgumentException  │ ✅ PASS  │
- * │ MS3 │ Envoyer par un non-participant          │ IllegalArgumentException  │ ✅ PASS  │
+ * │ MS2 │ Envoyer un message vide                 │ IllegalArgumentException │ ✅ PASS  │
+ * │ MS3 │ Envoyer par un non-participant          │ IllegalArgumentException │ ✅ PASS  │
  * │ MS4 │ Le provider peut répondre               │ Message sauvegardé       │ ✅ PASS  │
  * └─────┴─────────────────────────────────────────┴──────────────────────────┴──────────┘
  */

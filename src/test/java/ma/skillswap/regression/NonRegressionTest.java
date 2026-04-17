@@ -18,12 +18,12 @@ import static org.mockito.Mockito.*;
 
 /**
  * ╔══════════════════════════════════════════════════════════════════╗
- * ║  TESTS DE NON-RÉGRESSION - SkillSwap                           ║
- * ║                                                                 ║
- * ║  Ces tests vérifient que les fonctionnalités core ne cassent    ║
- * ║  pas après des modifications du code.                           ║
- * ║                                                                 ║
- * ║  Scénario complet : cycle de vie d'un swap de A à Z            ║
+ * ║  TESTS DE NON-RÉGRESSION - SkillSwap                             ║
+ * ║                                                                  ║
+ * ║  Ces tests vérifient que les fonctionnalités core ne cassent     ║
+ * ║  pas après des modifications du code.                            ║
+ * ║                                                                  ║
+ * ║  Scénario complet : cycle de vie d'un swap de A à Z              ║
  * ╚══════════════════════════════════════════════════════════════════╝
  *
  * SCÉNARIOS DE NON-RÉGRESSION :
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
  * │ NR4  │ Swap complété → possibilité de noter              │ Review créée           │ ✅ PASS  │
  * │ NR5  │ Hashage de MDP résistant à une refactorisation    │ Vérification toujours  │ ✅ PASS  │
  * │ NR6  │ Solde jamais négatif après plusieurs swaps        │ Solde ≥ 0              │ ✅ PASS  │
- * │ NR7  │ Filtrage catalogue par catégorie stable            │ Résultats cohérents    │ ✅ PASS  │
+ * │ NR7  │ Filtrage catalogue par catégorie stable           │ Résultats cohérents    │ ✅ PASS  │
  * └──────┴───────────────────────────────────────────────────┴────────────────────────┴──────────┘
  */
 @ExtendWith(MockitoExtension.class)

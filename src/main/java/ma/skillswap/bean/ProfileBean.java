@@ -130,6 +130,11 @@ public class ProfileBean implements Serializable {
 
     public String getReviewComment() { return reviewComment; }
     public void setReviewComment(String reviewComment) { this.reviewComment = reviewComment; }
+    public String getFormattedRating() {
+        if (averageRating == null) return "N/A";
+        return String.format("%.1f", averageRating);
+    }
+
     public String getStars(Integer note) {
         if (note == null) return "";
         return "★".repeat(note) + "☆".repeat(5 - note);

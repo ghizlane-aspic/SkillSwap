@@ -11,6 +11,11 @@
     <title>
         <ui:insert name="title">SkillSwap</ui:insert>
     </title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="#{request.contextPath}/resources/images/logo.png"/>
+    <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/logo.png"/>
+
     <h:outputStylesheet name="css/style.css"/>
 </h:head>
 
@@ -18,7 +23,11 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-brand">
-            <h:link value="SkillSwap" outcome="/index" styleClass="#{facesContext.viewRoot.viewId == '/index.xhtml' ? 'brand-link active' : 'brand-link'}"/>
+            <h:link outcome="/index" styleClass="#{facesContext.viewRoot.viewId == '/index.xhtml' ? 'brand-link active' : 'brand-link'}">
+                <h:graphicImage name="logo.png" library="images"
+                                alt="SkillSwap Logo"
+                                styleClass="brand-logo"/>
+            </h:link>
         </div>
         <div class="nav-links">
             <h:link value="Catalogue" outcome="/catalog" styleClass="#{facesContext.viewRoot.viewId == '/catalog.xhtml' ? 'nav-link active' : 'nav-link'}"/>

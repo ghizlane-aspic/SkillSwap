@@ -16,8 +16,8 @@ import static org.mockito.Mockito.*;
 
 /**
  * ╔══════════════════════════════════════════════════════════════╗
- * ║  TESTS - ReviewService                                      ║
- * ║  Fonctionnalité D : Système de Confiance (Évaluations)      ║
+ * ║  TESTS - ReviewService                                       ║
+ * ║  Fonctionnalité D : Système de Confiance (Évaluations)       ║
  * ╚══════════════════════════════════════════════════════════════╝
  *
  * SCÉNARIOS DE TEST :
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
  * │ RV1 │ Créer un avis valide (note 1-5)           │ Review créée               │ ✅ PASS  │
  * │ RV2 │ Avis sur un swap non COMPLETED            │ IllegalStateException      │ ✅ PASS  │
  * │ RV3 │ Avis sur un swap déjà noté                │ IllegalStateException      │ ✅ PASS  │
- * │ RV4 │ Note invalide (< 1 ou > 5)               │ IllegalArgumentException   │ ✅ PASS  │
+ * │ RV4 │ Note invalide (< 1 ou > 5)                │ IllegalArgumentException   │ ✅ PASS  │
  * │ RV5 │ Notes aux limites (1 et 5) valides        │ Review créée               │ ✅ PASS  │
  * └─────┴───────────────────────────────────────────┴────────────────────────────┴──────────┘
  */

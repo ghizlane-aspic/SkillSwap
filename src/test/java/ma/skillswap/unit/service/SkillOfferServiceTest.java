@@ -17,8 +17,8 @@ import static org.mockito.Mockito.*;
 
 /**
  * ╔══════════════════════════════════════════════════════════════╗
- * ║  TESTS - SkillOfferService                                  ║
- * ║  Fonctionnalité B : Catalogue et Gestion des Compétences    ║
+ * ║  TESTS - SkillOfferService                                   ║
+ * ║  Fonctionnalité B : Catalogue et Gestion des Compétences     ║
  * ╚══════════════════════════════════════════════════════════════╝
  *
  * SCÉNARIOS DE TEST :
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
  * │ SO3 │ Recherche par mot-clé              │ Offres filtrées          │ ✅ PASS  │
  * │ SO4 │ Filtrer par catégorie              │ Offres de la catégorie   │ ✅ PASS  │
  * │ SO5 │ Mettre à jour une offre            │ update() appelé          │ ✅ PASS  │
- * │ SO6 │ Supprimer une offre               │ deleteById() appelé      │ ✅ PASS  │
+ * │ SO6 │ Supprimer une offre                │ deleteById() appelé      │ ✅ PASS  │
  * └─────┴────────────────────────────────────┴──────────────────────────┴──────────┘
  */
 @ExtendWith(MockitoExtension.class)
