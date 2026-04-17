@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+
+<ui:composition template="/WEB-INF/templates/layout.xhtml">
+    <ui:define name="title">SkillSwap - Messages</ui:define>
+
+    <ui:define name="content">
+        <div class="container">
+            <h1>💬 Messages</h1>
+            <h:messages globalOnly="true" styleClass="messages"/>
+
+            <ui:fragment rendered="#{messageBean.swapRequestValid}">
+                <div class="messages-container">
+                    <!-- Swap Request Info -->
+                    <div class="swap-info-box">
+                        <h2>Conversation concernant :
+                            <span class="skill-name">#{messageBean.swapRequest.skillOffer.skill.titreCompetence}</span>
+                        </h2>
+                        <p>
+                            <strong>Demandeur :</strong> #{messageBean.swapRequest.requester.nom}
+                        </p>
+                        <p>
+                            <strong>Enseignant :</strong> #{messageBean.swapRequest.provider.nom}
+                        </p>
+                        <p>
+                            <strong>Statut :</strong>
+                            <span class="badge badge-status badge-#{messageBean.swapRequest.statut.toString().toLowerCase()}">
+                                #{messageBean.swapRequest.statut.label}
+                            </span>
+                        </p>
+                    </div>
+
+                    <!-- Messages List -->
+                    <div class="messages-list">
+                        <h3>Historique des messages</h3>
+
+                        <ui:fragment rendered="#{not empty messageBean.messages}">
+                            <div class="chat-box">
+                                <ui:repeat value="#{messageBean.messages}" var="msg">
+                                    <div class="message-item #{messageBean.getSenderStyle(msg)}">
+                                        <div class="message-header">
+                                            <span class="sender-name">#{messageBean.getSenderName(msg)}</span>
+                                            <span class="message-time">
+                                                <h:outputText value="#{msg.dateEnvoi}"
+                                                            format="dd/MM/yyyy HH:mm"/>
+                                            </span>
+                                        </div>
+                                        <div class="message-content">
+                                            #{msg.contenu}
+                                        </div>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                        </ui:fragment>
+
+                        <ui:fragment rendered="#{empty messageBean.messages}">
+                            <p style="color: #888; text-align: center; padding: 2rem;">
+                                Aucun message pour le moment. Démarrez la conversation !
+                            </p>
+                        </ui:fragment>
+                    </div>
+
+                    <!-- Send Message Form -->
+                    <div class="send-message-box">
+                        <h3>Envoyer un message</h3>
+                        <h:form styleClass="message-form">
+                            <div class="form-group">
+                                <h:inputTextarea value="#{messageBean.messageContent}"
+                                                 placeholder="Écrivez votre message ici..."
+                                                 rows="4"
+                                                 styleClass="form-control message-textarea"/>
+                            </div>
+                            <h:commandButton value="📤 Envoyer"
+                                           action="#{messageBean.sendMessage()}"
+                                           styleClass="btn btn-primary btn-lg"
+                                           update="@form :messages"/>
+                            <h:link value="↩️ Retour au tableau de bord"
+                                   outcome="/my-swaps.xhtml"
+                                   styleClass="btn btn-secondary"/>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{not messageBean.swapRequestValid}">
+                <div style="text-align: center; padding: 3rem;">
+                    <p style="color: #888; font-size: 1.1rem;">
+                        Impossible de charger la conversation. Veuillez retourner au tableau de bord.
+                    </p>
+                    <h:link value="↩️ Retour au tableau de bord"
+                           outcome="/my-swaps.xhtml"
+                           styleClass="btn btn-primary"/>
+                </div>
+            </ui:fragment>
+        </div>
+
+        <h:outputStylesheet name="css/messages.css" library="resources"/>
+    </ui:define>
+</ui:composition>
+</html>
+
+

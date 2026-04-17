@@ -123,12 +123,10 @@ public class ManageSkillsBean implements Serializable {
     public void deleteOffer(Long offerId) {
         try {
             skillOfferService.deleteById(offerId);
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Offre supprimée.", null));
+            toastScript = "ssToast('success','Offre supprimée !','Votre offre a été supprimée avec succès.');";
             loadMyOffers();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erreur lors de la suppression.", null));
+            toastScript = "ssToast('error','Erreur','" + e.getMessage() + "');";
         }
     }
 

@@ -57,6 +57,10 @@
                                 </td>
                                 <td>
                                     <h:form styleClass="actions-cell">
+                                        <h:link value="💬 Messages" outcome="/messages.xhtml"
+                                               styleClass="btn btn-sm btn-info">
+                                            <f:param name="swapRequestId" value="#{req.id}"/>
+                                        </h:link>
                                         <h:commandButton value="✅ Accepter"
                                                          action="#{dashboardBean.acceptRequest(req.id)}"
                                                          rendered="#{req.statut == 'PENDING'}"
@@ -114,6 +118,10 @@
                                     </span>
                                 </td>
                                 <td>
+                                    <h:link value="💬 Messages" outcome="/messages.xhtml"
+                                           styleClass="btn btn-sm btn-info">
+                                        <f:param name="swapRequestId" value="#{req.id}"/>
+                                    </h:link>
                                     <ui:fragment rendered="#{req.statut == 'COMPLETED' and req.review == null}">
                                         <h:link value="⭐ Laisser un avis" outcome="/profile"
                                                 styleClass="btn btn-sm btn-secondary">

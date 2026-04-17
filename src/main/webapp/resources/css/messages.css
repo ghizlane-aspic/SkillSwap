@@ -1,0 +1,299 @@
+/* ============================================================
+   SKILLSWAP — Messages CSS
+   Thème harmonisé avec style.css
+   ============================================================ */
+
+/* Info box pour les détails de l'échange */
+.swap-info-box {
+    background: linear-gradient(135deg, var(--teal-soft) 0%, rgba(42, 157, 143, 0.08) 100%);
+    border-left: 4px solid var(--teal);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+}
+
+.swap-info-box h2 {
+    margin-top: 0;
+    color: var(--ink);
+    font-family: var(--font-display);
+    margin-bottom: 1rem;
+}
+
+.skill-name {
+    color: var(--teal);
+    font-weight: 700;
+}
+
+.swap-info-box p {
+    margin: 0.5rem 0;
+    color: var(--ink-soft);
+}
+
+/* Section messages */
+.messages-list {
+    margin-bottom: 2rem;
+}
+
+.messages-list h3 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+/* Boîte de chat */
+.chat-box {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem;
+    max-height: 550px;
+    overflow-y: auto;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Message item */
+.message-item {
+    margin-bottom: 1.2rem;
+    padding: 0.875rem 1rem;
+    border-radius: var(--radius-sm);
+    max-width: 85%;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Messages envoyés */
+.message-sent {
+    background: linear-gradient(135deg, var(--teal) 0%, rgba(42, 157, 143, 0.9) 100%);
+    color: var(--white);
+    margin-left: auto;
+    border-bottom-right-radius: 2px;
+    box-shadow: 0 2px 6px rgba(42, 157, 143, 0.2);
+}
+
+.message-sent .message-time {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Messages reçus */
+.message-received {
+    background-color: var(--cream-dark);
+    color: var(--ink);
+    margin-right: auto;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 1px 3px rgba(26, 26, 46, 0.08);
+}
+
+.message-received .message-time {
+    color: var(--muted);
+}
+
+/* Header du message */
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+}
+
+.sender-name {
+    font-weight: 700;
+    font-family: var(--font-display);
+}
+
+.message-time {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-left: 0.75rem;
+}
+
+/* Contenu du message */
+.message-content {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+/* Boîte d'envoi */
+.send-message-box {
+    background: linear-gradient(135deg, var(--cream-dark) 0%, rgba(250, 248, 243, 0.5) 100%);
+    padding: 1.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.send-message-box h3 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    margin: 0 0 1.2rem 0;
+    font-size: 1.2rem;
+}
+
+/* Formulaire */
+.message-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Textarea */
+.message-textarea {
+    padding: 0.875rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    resize: vertical;
+    color: var(--ink);
+    background-color: var(--white);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.message-textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.1);
+}
+
+.message-textarea::placeholder {
+    color: var(--muted);
+}
+
+/* Boutons */
+.btn-lg {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.btn-info {
+    background-color: var(--teal);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-info:hover {
+    background-color: rgba(42, 157, 143, 0.85);
+    box-shadow: 0 4px 12px rgba(42, 157, 143, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Container d'animation */
+.messages-container {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Badges de statut */
+.badge-status {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.badge-pending {
+    background-color: #ffc107;
+    color: #333;
+}
+
+.badge-accepted {
+    background-color: var(--teal);
+    color: var(--white);
+}
+
+.badge-rejected {
+    background-color: #dc3545;
+    color: var(--white);
+}
+
+.badge-completed {
+    background-color: var(--gold);
+    color: var(--ink);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .message-item {
+        max-width: 95%;
+    }
+
+    .message-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .message-time {
+        margin-left: 0;
+        margin-top: 0.3rem;
+    }
+
+    .swap-info-box {
+        padding: 1rem;
+    }
+
+    .send-message-box {
+        padding: 1rem;
+    }
+
+    .chat-box {
+        max-height: 400px;
+        padding: 1rem;
+    }
+}
+
+/* Scrollbar personnalisée */
+.chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: var(--cream);
+    border-radius: 4px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: var(--teal);
+    border-radius: 4px;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: rgba(42, 157, 143, 0.8);
+}
+

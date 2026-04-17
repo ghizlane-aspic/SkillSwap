@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "messages")
 @NamedQueries({
-        @NamedQuery(name = "Message.findBySwapRequest", query = "SELECT m FROM Message m WHERE m.swapRequest.id = :swapRequestId ORDER BY m.dateEnvoi ASC")
+        @NamedQuery(name = "Message.findBySwapRequest", query = "SELECT m FROM Message m JOIN FETCH m.sender WHERE m.swapRequest.id = :swapRequestId ORDER BY m.dateEnvoi ASC")
 })
 public class Message implements Serializable {
 
